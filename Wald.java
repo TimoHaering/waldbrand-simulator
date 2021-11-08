@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Wald {
-	static String[][] wald = new String[25][25];
-	static Random rand = new Random();
+	public static final String[][] wald = new String[25][25];
+	public static final Random rand = new Random();
 
 	public static void main(String[] args) throws InterruptedException {
 
