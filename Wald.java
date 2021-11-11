@@ -1,22 +1,19 @@
 import java.util.Random;
 
 public class Wald {
-	static String[][] wald = new String[25][25];
-	static Random rand = new Random();
+	public static String[][] wald = new String[25][25];
+	public static final Random rand = new Random();
+	public static final String[] states = new String[]{"🌳", "💨", "🔥"};
 
 	public static void main(String[] args) throws InterruptedException {
 
-		feldErstellen();
+		feldErstellen(true);
 
-		BaumZuFeuer();
-		FeuerZuAsche();
-		AscheZuBaum();
-		
-		printAll();
+
 		while(true) {
-			BaumZuFeuer();
-			FeuerZuAsche();
-			AscheZuBaum();
+			transformation("🌳", "🔥");
+			transformation("🔥","💨");
+			transformation("💨", "🌳");
 			
 			printAll();
 			Thread.sleep(1000);
@@ -27,37 +24,12 @@ public class Wald {
 		}
 
 	}
-	private static void FeuerZuAsche() {
+	private static void transformation(String initial, String next) {
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
 				int zufall = rand.nextInt(100);
-				if (wald[x][y].equals("🔥") && zufall < 10) {
-					wald[x][y] = "💨";
-
-				}
-			}
-
-		}
-	}
-	private static void AscheZuBaum() {
-		for (int x = 0; x < 25; x++) {
-			for (int y = 0; y < 25; y++) {
-				int zufall = rand.nextInt(100);
-				if (wald[x][y].equals("💨") && zufall < 10) {
-					wald[x][y] = "🌳";
-
-				}
-			}
-
-		}
-	}
-
-	private static void BaumZuFeuer() {
-		for (int x = 0; x < 25; x++) {
-			for (int y = 0; y < 25; y++) {
-				int zufall = rand.nextInt(100);
-				if (wald[x][y].equals("🌳") && zufall < 10) {
-					wald[x][y] = "🔥";
+				if (wald[x][y].equals(initial) && zufall < 10) {
+					wald[x][y] = next;
 
 				}
 			}
@@ -80,17 +52,16 @@ public class Wald {
 
 	}
 
-	private static void feldErstellen() {
+	private static void feldErstellen(boolean random) {
 
 		for (int x = 0; x < 25; x++) {
 			for (int y = 0; y < 25; y++) {
-				int zufall = rand.nextInt(100);
-				if (zufall < 99 - 20) {
-					wald[x][y] = "🌳";
+				if(random) {
+					int zufall = rand.nextInt(2);
+					wald[x][y] = states[zufall];
 				} else {
-					wald[x][y] = "💨 ";
+					wald[x][y] = states[0]; //baum
 				}
-
 			}
 		}
 
